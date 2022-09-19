@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('sku', 6)->unique();
+            $table->string('sku', 6);
             $table->string('name');
             $table->foreignId('category_id')->constrained();
             $table->unsignedInteger('price');
