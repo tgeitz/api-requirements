@@ -18,15 +18,18 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         // Filters from query string
-        $category = Category::where('name', $request->query('category'))->first();
+        $category = $request->query('category');
         $price = intval($request->query('price'));
-        // Filtering by exact price doesn't seem like a good user experience, so
+        // Filtering only by exact price doesn't seem like a good user experience, so
         //   let's offer min/max price filters as well.
         $priceMin = intval($request->query('price_min'));
         $priceMax = intval($request->query('price_max'));
 
         $products = Product::when($category, function ($query, $category) {
-                $query->where('category_id', $category->id);
+                // If the user filters by a category that doesn't exist, we want to
+                //   show no results instead of skipping the filter altogether
+                $categoryId = Category::where('name', $category)->first()->id ?? null;
+                $query->where('category_id', $categoryId);
             })
             ->when($price, function ($query, $price) {
                 $query->where('price', '=', $price);
