@@ -17,14 +17,19 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
+        // Filters from query string
         $category = Category::where('name', $request->query('category'))->first();
+        $price = intval($request->query('price'));
         // Filtering by exact price doesn't seem like a good user experience, so
-        //   let's offer min/max price filters instead
+        //   let's offer min/max price filters as well.
         $priceMin = intval($request->query('price_min'));
         $priceMax = intval($request->query('price_max'));
 
         $products = Product::when($category, function ($query, $category) {
                 $query->where('category_id', $category->id);
+            })
+            ->when($price, function ($query, $price) {
+                $query->where('price', '=', $price);
             })
             ->when($priceMin, function ($query, $priceMin) {
                 $query->where('price', '>=', $priceMin);
