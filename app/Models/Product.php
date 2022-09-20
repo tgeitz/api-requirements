@@ -16,4 +16,18 @@ class Product extends Model
     {
         return $this->morphMany(Discount::class, 'discountable');
     }
+    
+
+    public function mostRelevantDiscountPercentage()
+    {
+        $allDiscounts = $this->discounts->concat($this->category->discounts);
+
+        return $allDiscounts->where('is_active', true)->max('discount_percentage');
+    }
+
+    public function discountedPrice()
+    {
+        $mostRelevantDiscountPercentage = $this->mostRelevantDiscountPercentage();
+        return intval($mostRelevantDiscountPercentage ? ($this->price * ((100 - $mostRelevantDiscountPercentage) / 100)) : $this->price);
+    }
 }
