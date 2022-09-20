@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use HasFactory;
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function discounts()
+    {
+        return $this->morphMany(Discount::class, 'discountable');
+    }
 }

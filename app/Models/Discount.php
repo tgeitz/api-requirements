@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Discount extends Model
 {
-    use HasFactory;
+    public function discountable()
+    {
+        return $this->morphTo();
+    }
 }
