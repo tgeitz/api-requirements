@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -17,12 +16,15 @@ class Product extends Model
         return $this->morphMany(Discount::class, 'discountable');
     }
     
-
+    /**
+     * Rather than applying all discounts multiplicatively, we'll apply the most relevant one--
+     *   which I've taken to mean the highest applicable discount, for the customer's benefit.
+     */
     public function mostRelevantDiscountPercentage()
     {
         $allDiscounts = $this->discounts->concat($this->category->discounts);
 
-        return $allDiscounts->where('is_active', true)->max('discount_percentage');
+        return $allDiscounts->max('discount_percentage');
     }
 
     public function discountedPrice()
