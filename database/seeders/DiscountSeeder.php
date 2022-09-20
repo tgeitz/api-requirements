@@ -18,8 +18,8 @@ class DiscountSeeder extends Seeder
     public function run()
     {
         $discounts = [
-            ['discountable_type' => 'product', 'discountable_id' => Product::where('sku', '000003')->firstOrFail()->id, 'discount_percentage' => 15, 'is_active' => true],
-            ['discountable_type' => 'category', 'discountable_id' => Category::where('name', 'insurance')->firstOrFail()->id, 'discount_percentage' => 30, 'is_active' => true],
+            ['discountable_type' => 'App\Models\Product', 'discountable_id' => Product::where('sku', '000003')->firstOrFail()->id, 'discount_percentage' => 15, 'is_active' => true],
+            ['discountable_type' => 'App\Models\Category', 'discountable_id' => Category::where('name', 'insurance')->firstOrFail()->id, 'discount_percentage' => 30, 'is_active' => true],
         ];
 
         foreach ($discounts as $discount) {
