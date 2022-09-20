@@ -7,12 +7,12 @@ composer install
 ```
 from the new project directory.
 
-Set up a database for the project and run
+Create a `.env` file in the project root and paste the contents of `.env.example` into it, modifying as needed.
+
+If you plan on running locally:
+Make sure you've fully updated PHP (8.1) and Composer. Set up a database for the project and run
 ```
 php artisan migrate
-```
-and
-```
 php artisan db:seed
 ```
 to create and populate the tables with the required dataset.
@@ -22,6 +22,8 @@ Finally, run
 php artisan serve
 ```
 to set up the local server at `127.0.0.1:8000` by default. View the test endpoint at `/api/products`.
+
+## Original Requirements:
 
 ## Description
 We want you to implement a REST API endpoint that given a list of products, applies some
