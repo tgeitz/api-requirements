@@ -1,5 +1,28 @@
 # api-requirements
 
+## Installation and Getting Started
+Clone the repo to your local project directory, and in the terminal run
+```
+composer install
+```
+from the new project directory.
+
+Set up a database for the project and run
+```
+php artisan migrate
+```
+and
+```
+php artisan db:seed
+```
+to create and populate the tables with the required dataset.
+
+Finally, run
+```
+php artisan serve
+```
+to set up the local server at `127.0.0.1:8000` by default. View the test endpoint at `/api/products`.
+
 ## Description
 We want you to implement a REST API endpoint that given a list of products, applies some
 discounts to them and can be filtered.
